@@ -1,0 +1,12 @@
+python
+[myapp:children]
+front
+back
+[front]
+python0
+python1
+[back]
+python2
+python3
+[all:vars]
+ansible_connection=docker

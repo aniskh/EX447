@@ -1,0 +1,17 @@
+all:
+  children:
+    myapp:
+      children:
+        back:
+          hosts:
+            python[2:3]:
+        front:
+          hosts:
+            python[0:1]:   
+      vars:
+          ansible_connection: docker
+    ungrouped:
+      hosts:
+        loadbalancer:
+          ansible_host: python
+          ansible_connection: docker

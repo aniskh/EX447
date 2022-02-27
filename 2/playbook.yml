@@ -1,0 +1,14 @@
+---
+#Usage: ansible-playbook -i inventory.yml playbook.yml
+- name: A simple playbook to illustrate inventroy variables
+  hosts: all
+  become: false
+  gather_facts: False
+  tasks:
+  - name: display inventory vars
+    debug: 
+      msg: "Running on this machine: {{ inventory_hostname }}, defined in inventroy by this name/IP : {{ ansible_host }}"
+  
+  - name: display host/group vars
+    debug:
+      var: message

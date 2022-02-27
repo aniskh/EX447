@@ -5,15 +5,15 @@
   gather_facts: yes
   become: False
   tasks:
-          - name: create  a group for each OS Family
-            group_by:
-              key: OSFamily_{{ ansible_os_family }}
-            changed_when: false
+    - name: create  a group for each OS Family
+      group_by:
+        key: OSFamily_{{ ansible_os_family }}
+        changed_when: false
 - name: test created group for Redhat family group
   hosts: OSFamily_RedHat
   gather_facts: no
   become: False
   tasks:
-          - name: display list of machines having RadHat as OS family
-            debug:
-              msg: " {{ inventory_hostname }} has an  OS from RedHat family "
+    - name: display list of machines having RadHat as OS family
+      debug:
+        msg: " {{ inventory_hostname }} has an  OS from RedHat family "

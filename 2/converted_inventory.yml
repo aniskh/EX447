@@ -1,0 +1,20 @@
+all:
+  children:
+    myapp:
+      children:
+        back:
+          hosts:
+            python2:
+              ansible_connection: docker
+            python3:
+              ansible_connection: docker
+        front:
+          hosts:
+            python0:
+              ansible_connection: docker
+            python1:
+              ansible_connection: docker
+    ungrouped:
+      hosts:
+        python:
+          ansible_connection: docker

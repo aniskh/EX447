@@ -1,0 +1,35 @@
+version: "3.9"
+services:
+  python:
+    image: python:alpine3.15
+    container_name: python
+    command: "sleep 3000"
+    networks:
+        - default
+  python0:
+    image: python:alpine3.15
+    container_name: python0
+    command: "sleep 3000"
+    networks:
+        - default
+  python1:
+    image: python:alpine3.15
+    container_name: python1
+    command: "sleep 3000"
+    networks:
+        - default
+  python2:
+    image: python:alpine3.15
+    container_name: python2
+    command: "sleep 3000"
+    networks:
+        - default
+  python3:
+    image: python:alpine3.15
+    container_name: python3
+    command: "sleep 3000"
+    networks:
+        - default
+networks:
+  default: 
+    
