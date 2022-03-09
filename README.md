@@ -1,5 +1,5 @@
 # EX447
-preparation for EX447 exam
+preparation for EX447 exam <br/>
 The purpose is to test the different objectives covered by DO447 preparing for EX447
 
 
@@ -17,7 +17,7 @@ Special inventory vars: ansible_connection, ansible_host, ansible_port, ansible_
 
 ## Chapter 3: 
 become, become_user, become_method<br/>
-import role, include_role<br/>
+import_role, include_role<br/>
 notify, listen <br/>
 tags, skip-tags, tagged, untagged <br/>
 never, always<br/>
