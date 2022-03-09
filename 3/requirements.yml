@@ -1,0 +1,5 @@
+#Usage: ansible-galaxy role install -r requirements.yml -p roles/
+- name: apache2
+  src: https://github.com/mrlesmithjr/ansible-apache2.git
+- name: php
+  src: geerlingguy.php

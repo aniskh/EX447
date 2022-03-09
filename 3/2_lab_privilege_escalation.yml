@@ -1,0 +1,26 @@
+# Usage: ansible-playbook 2_lab_privilege_escalation.yml
+--- 
+- name: playbook to show usage of privilege escalation
+  hosts: front
+  become: False
+  gather_facts: True
+  tasks:
+  - name: get machine hostname
+    debug:
+      var: ansible_hostname
+  - block:
+    - name: install web server 
+      apt:
+        name: apache2
+        state: present
+        update_cache: True
+    - name: start apache service
+      service:
+        name: apache2
+        state: started
+      register:  apachestatus   
+    become: True
+  - name: test apache
+    uri:
+      url: "http://{{ ansible_default_ipv4.address }}"
+    when: apachestatus.state == 'started'

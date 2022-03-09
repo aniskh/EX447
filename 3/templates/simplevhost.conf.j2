@@ -1,0 +1,16 @@
+<VirtualHost *:80>
+
+    DocumentRoot {{ myapp_home }}
+    <Directory {{ myapp_home }}>
+        AllowOverride All
+        FallbackResource /index.html
+    </Directory>
+
+    <Directory {{ myapp_home }}>
+        Options FollowSymlinks
+    </Directory>
+    
+    ErrorLog /var/log/apache2/vhost_error.log
+    CustomLog /var/log/apache2/vhost_access.log combined
+
+</VirtualHost>

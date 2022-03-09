@@ -1,0 +1,10 @@
+---
+#Usage: cgexec -g cpuacct,memory,pids:ansible_profile ansible-playbook 5_tuning_callbacks.yml
+- name: No facts
+  hosts: localhost
+  gather_facts: False
+  become: False
+  tasks:
+  - name: display simple message
+    debug:
+      msg: "Starting deployments ..."

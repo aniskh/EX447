@@ -1,0 +1,28 @@
+---
+#Usage: ansible-playbook  1_privilege_escalation.yml
+- name: A simple playbook to illustrate privilege escalation
+  hosts: front
+  become: False
+  gather_facts: False
+  tasks:
+  - name: display message
+    debug: 
+      msg: "Running without privileges"
+- name: A simple playbook to illustrate privilege escalation
+  hosts: back
+  become: False
+  gather_facts: False
+  tasks:
+  - block:
+    - name: display a message
+      debug: 
+        msg: "Running with privileges"
+    - name: Get current user with escalation
+      shell: 'id -nu'
+      register: shellresult
+    become: False
+    become_user: root
+    become_method: sudo
+  - name: display user 
+    debug: 
+      var: shellresult.stdout

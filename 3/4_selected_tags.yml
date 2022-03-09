@@ -1,0 +1,57 @@
+---
+#Usage: ansible-playbook --tags setup 4_selected_tags.yml 
+- name: A simple playbook to illustrate tags
+  hosts: back
+  gather_facts: True
+  become: False
+  vars:
+    - app_path: /opt/myapp
+  tasks:
+  - name: copy always a simple msg banner
+    copy:
+      content: "Welcome to {{ ansible_hostname }} : an application server"
+      dest: /etc/motd
+    become: True
+    tags: always # run always 
+  - name: create app user
+    user:
+      name: bckuser
+      uid: 2022
+      comment: "Ansible - MyAPP user"
+    become: True
+    tags:
+     - setup
+  - name: create app home directory
+    file:
+      state: directory 
+      path: "{{ app_path }}"
+      mode: '0755'
+      owner: bckuser
+      group: bckuser
+    become: True
+    tags:
+     - setup
+  - name: install python
+    apt:
+      name: python
+      state: present
+    become: True
+    tags:
+     - setup
+  - name: copy app to clients
+    copy:
+      src: reverse.py
+      dest: "{{ app_path }}/reverse.py"
+      owner: bckuser
+      group: bckuser
+      mode: '0644'
+    become: True
+    tags:
+     - setup
+  - name: uninstall app_path
+    file:
+      state: absent 
+      path: "{{ app_path }}"
+    become: True
+    tags:
+     - never

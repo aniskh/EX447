@@ -1,0 +1,53 @@
+---
+#Usage: ansible-playbook 5_optimizing.yml
+# Simple playbook to illustrate some optimizations
+- name: No facts
+  hosts: back
+  gather_facts: False
+  become: False
+  tasks:
+  - name: display simple message
+    debug:
+      msg: "Starting deployments ..."
+
+- name: more efficient
+  hosts: back
+  gather_facts: True
+  become: False
+  tasks:
+  - name: install multiple packages
+    apt:
+      name: "{{ app_dependencies }}"  # a list of packages in plcae of a loop for each package
+      state: present
+    become: True
+  - name: create app directory
+    file:
+      path: "{{ myapp_home }}"
+      state: directory
+    become: True
+  - name: copy files using rsync 
+    synchronize: # more efficient than copy
+      src: myapp/
+      dest: "{{ myapp_home }}"
+      checksum: True
+      archive: True
+    become: False
+    ignore_errors: True # issue synchronize + docker, rsync protocol mismatch
+  - name: copy apache vhost config file
+    template: # using template, better than lineinfile for multiple changes
+      src: templates/simplevhost.conf.j2
+      dest: /etc/apache2/sites-available/simplevhost.conf
+      owner: root
+      group: root
+      mode: '0644'
+    become: True
+    notify: restartapache
+  - name: enable apache vhost
+    shell: "a2ensite simplevhost"
+    become: True
+    notify: restartapache  
+  handlers:
+  - name: restartapache
+    service:
+      name: apache2
+      state: restarted

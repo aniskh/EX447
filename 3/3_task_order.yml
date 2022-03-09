@@ -1,0 +1,52 @@
+---
+#Usage: ansible-playbook  3_task_order.yml
+- name: A simple playbook to illustrate order of execution of tasks, roles, handlers, hosts, ...
+  hosts: front
+  order: sorted # apply on hasts alphabetically ( possibilities: inventory, reverse_inventory, sorted, reverse_sorted, shuffle)
+  gather_facts: True
+  become: False
+  pre_tasks: 
+    - name: a simple pre_task 
+      debug: 
+        msg: "Starting deployment of php and apache roles on front machines"
+      changed_when: True
+      notify: simple_handler
+  roles:
+    - role: php
+      become: True
+    - role: apache2
+      become: True
+  tasks: 
+  - name: delete default html content
+    shell: "rm -rf /var/www/html/*"
+    become: True 
+    notify: cleanup http error logs # call a handler by its name
+  - name: copy a simple php file
+    copy:
+      content: "Hello from the following docker image: {{ ansible_host }}"
+      dest: /var/www/html/index.php
+    notify: apache handlers # call a list of handlers subscribed to a notification
+    become: True
+ # - name: notify all handlers   # call all notified handlers
+ #   meta: flush_handlers  
+  post_tasks:
+    - name: posttask at the end
+      debug:
+        msg: "Deployment finished successfully on {{ ansible_host }}"
+  handlers:
+  - name: simple_handler
+    debug: msg="This is a handler running"
+  - name: restart apache
+    service: 
+      name: apache2
+      state: restarted
+    become: True
+    listen: apache handlers # subscribe to this notification
+  - name: cleanup http error logs
+    shell: "rm -rf /var/log/apache2/*"
+    become: True
+  - name:  test access to apache server
+    uri:
+      url: "http://{{ ansible_default_ipv4.address }}"
+    listen: apache handlers # subscribe to this notification
+    
