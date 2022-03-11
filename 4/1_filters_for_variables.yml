@@ -1,0 +1,58 @@
+---
+#Usage: ansible-playbook 1_filters_for_variables.yml
+- name: A simple playbook to illustrate processing variables using filters
+  hosts: front
+  become: false
+  gather_facts: true # booleans to be lowercase if used in jinja
+  vars:
+    - front_home: /opt/front
+    - folders: # a list/array
+       - service 
+       - files
+       - logs
+    - users: # a dictionar / map
+        - name: logger
+          comment: "front logging user"
+          uid: 1011
+          home: "{{ front_home }}/audit"
+          password: pass
+        - name: broker
+          comment: "front broking traffic user"
+          uid: 1012
+          home: "{{ front_home }}/broker"
+          password: pass
+  tasks:
+  - name: create a banner message
+    copy: # multiline string
+      content: | 
+                Welcome to {{ ansible_hostname }}
+                This is a production server,
+                please do not make modifications unless needed! 
+      dest: /etc/motd
+    become: true
+  - name: create folders  # looping a list
+    file:
+      path: "{{ front_home }}/{{ item }}"
+      state: directory
+      owner: root 
+      group: root 
+      mode: '0755'
+    loop: "{{ folders }}"
+    become: true
+  - name: create a group
+    group:
+      name: frontgrp
+      state: present 
+    become: true
+  - name: create many users # looping a dictionary
+    user:
+      append: true
+      name: "{{ item.name }}"
+      create_home: true
+      uid: "{{ item.uid | int }}"
+      home: "{{ item.home }}"
+      comment: "{{ item.comment }}"
+      password: "{{ item.password }}"
+      groups: frontgrp
+    loop: "{{ users }}"
+    become: true

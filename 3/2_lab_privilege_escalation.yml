@@ -20,7 +20,12 @@
         state: started
       register:  apachestatus   
     become: True
-  - name: test apache
+  - name: test apache # smoke test
     uri:
       url: "http://{{ ansible_default_ipv4.address }}"
+      return_content: true
+    register: privilege_smoke_test
+    until: ' "Hello from" in privilege_smoke_test.content'
+    retries: 10
+    delay: 1
     when: apachestatus.state == 'started'
