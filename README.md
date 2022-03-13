@@ -30,3 +30,17 @@ ansible-doc -t cgroup_perf_recap
 sudo cgcreate -a aniskhach:aniskhach -t aniskhach:aniskhach -g cpuacct,memory,pids:ansible_profile
 cgexec -g cpuacct,memory,pids:ansible_profile ansible-playbook playbook.yml
 ```
+
+
+## Chapter 4: 
+### filters:
+- generic: (int, string, bool, list, ...),  mandatory, default, default(omit)<br/>
+- maths: pow, log, root, abs, ...<br/>
+- lists: max, min, sum, first, last, length, random, reverse, sort, unique, flatten, uninion, difference, intersect, ... <br/>
+- dictionary: combine, dict2items, items2dict <br/>
+- strings: lower, upper, capitalize, b64encode, b64decode, quote <br/>
+- hash: hash, password_hash <br/>
+- replace, regex_search, regex_replace <br/>
+- json_query, to_json, to_yaml, to nice_json, to_nice_yaml <br/>
+
+### lookup:

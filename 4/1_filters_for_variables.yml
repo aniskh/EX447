@@ -4,23 +4,6 @@
   hosts: front
   become: false
   gather_facts: true # booleans to be lowercase if used in jinja
-  vars:
-    - front_home: /opt/front
-    - folders: # a list/array
-       - service 
-       - files
-       - logs
-    - users: # a dictionar / map
-        - name: logger
-          comment: "front logging user"
-          uid: 1011
-          home: "{{ front_home }}/audit"
-          password: pass
-        - name: broker
-          comment: "front broking traffic user"
-          uid: 1012
-          home: "{{ front_home }}/broker"
-          password: pass
   tasks:
   - name: create a banner message
     copy: # multiline string
@@ -44,15 +27,30 @@
       name: frontgrp
       state: present 
     become: true
-  - name: create many users # looping a dictionary
+  - name: create many users # looping dictionary
     user:
       append: true
       name: "{{ item.name }}"
       create_home: true
-      uid: "{{ item.uid | int }}"
-      home: "{{ item.home }}"
-      comment: "{{ item.comment }}"
-      password: "{{ item.password }}"
+      uid: "{{  ( item.uid | int | mandatory ) + 200 }}" # use mandatory filter
+      home: "{{ item.home | default ( front_home + '/' + item.name , true ) }}" # use default filter with a variable
+      comment: "{{ item.comment | default(omit) }}" # use default(omit) filter
+      password: "{{ item.password | password_hash('sha512') }}" # use hash filter
       groups: frontgrp
     loop: "{{ users }}"
+    become: true 
+  - name: create archive directories 
+    file:
+      path: "{{ front_home }}/{{ 'archive_' + item }}"
+      state: directory
+      owner: root 
+      group: root 
+      mode: '0755'
+    loop: "{{ folders }}"
+    become: true
+      
+  - name: log created users
+    copy:
+      content: "Created users:  {{ users | json_query('[*].name') | join (', ') }}" # use json_query & join filters
+      dest: "{{ front_home + '/logs/installation.log' }}" 
     become: true

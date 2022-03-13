@@ -1,0 +1,14 @@
+users: # dictionary/map
+  - name: logger
+    comment: "front logging user"
+    uid: 1011
+    home: "{{ front_home }}/audit"
+    password: pass
+  - name: broker
+    uid: 1012
+    password: pass
+front_home: /opt/front
+folders: # a list/array
+  - service 
+  - files
+  - logs
