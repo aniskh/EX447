@@ -1,0 +1,22 @@
+---
+#Usage: ansible-playbook 4_networking.yml
+- name: A simple playbook to illustrate ip addresses filtering
+  hosts: front
+  become: false
+  gather_facts: true
+  tasks:
+  - set_fact:
+      awsipranges: "{{ lookup('url', 'https://ip-ranges.amazonaws.com/ip-ranges.json', split_lines=False) }}" # use url lookup
+  - name: Add AWS ipv4 ranges 
+    copy: 
+      content: "{{ awsipranges | json_query( 'prefixes[*].ip_prefix' ) | ipaddr ('network/prefix') | ipaddr('public') | ipaddr('ipv4')  }}" # use ipaddr filter
+      dest: "{{ front_home + '/files/aws_ipaddresses' }}"
+    become: true
+  - name: Add AWS ipv6 ranges
+    copy: 
+      content: "{{ awsipranges | json_query( 'ipv6_prefixes[*].ipv6_prefix' ) | ipaddr ('network/prefix') | ipaddr('public') | ipaddr('ipv6')  }}"
+      dest: "{{ front_home + '/files/aws_ipv6addresses' }}"
+    become: true
+  - name: check amazonaws current ip addresses
+    debug:
+      msg: "{{ lookup('dig', 'amazonaws.com', '@8.8.8.8', 'qtype=A') }}"

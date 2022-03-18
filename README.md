@@ -1,12 +1,19 @@
 # EX447
 preparation for EX447 exam <br/>
-The purpose is to test the different objectives covered by DO447 preparing for EX447
+The purpose is to test the different objectives covered by DO447 preparing for EX447 <br/>
+
+To use this project, please follow below steps:
+- install ansible ( the code was developped using ansible 2.9 )
+- install docker and docker-compose in your environment
+- run the command in Dockerfile to create the customized image
+- run the command in docker-compose.yml file to startup client instances
+- run the command in each playbook to test the playbook
 
 
 ## Chapter 2: 
 ungrouped: a generic group for hosts without groups in yml inventories<br/>
 Useful commands:
-```
+```bash
 ansible-inventory -i inventory --list
 ansible-inventory --yaml -i inventory --list > converted_inventory.yml
 ansible all -i converted_inventory.yml -m ping
@@ -36,11 +43,23 @@ cgexec -g cpuacct,memory,pids:ansible_profile ansible-playbook playbook.yml
 ### filters:
 - generic: (int, string, bool, list, ...),  mandatory, default, default(omit)<br/>
 - maths: pow, log, root, abs, ...<br/>
-- lists: max, min, sum, first, last, length, random, reverse, sort, unique, flatten, uninion, difference, intersect, ... <br/>
+- lists: max, min, sum, first, last, length, random, reverse, sort, unique, flatten, uninion, difference, intersect, select, ... <br/>
 - dictionary: combine, dict2items, items2dict <br/>
 - strings: lower, upper, capitalize, b64encode, b64decode, quote <br/>
 - hash: hash, password_hash <br/>
 - replace, regex_search, regex_replace <br/>
-- json_query, to_json, to_yaml, to nice_json, to_nice_yaml <br/>
+- json_query, to_json, to_yaml, to_nice_json, to_nice_yaml <br/>
 
 ### lookup:
+
+```bash
+ansible-doc -lt lookup
+ansible-doc -t lookup file
+```
+lookup and query: file, template, pipe, lines, env, url, k8s, password, dig ( ``` pip install  dnspython ``` ), list ... <br/>
+
+### advanced loops:
+loop instead of with_* , flatten, dict2items, fileglob, subelements
+
+### IP addr processing:
+lookup: ipaddr ( ipv4, ipv6, public, private, subnet, ...), dig, 

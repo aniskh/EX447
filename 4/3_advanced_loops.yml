@@ -1,0 +1,44 @@
+---
+#Usage: ansible-playbook 3_advanced_loops.yml
+- name: A simple playbook to illustrate advanced loops
+  hosts: back
+  become: false
+  gather_facts: true
+  tasks:
+  - name: install dependencies
+    apt: 
+      name: "{{ backend_packages | list | flatten (levels=1) }}" # flatten list of lists, replace with_items
+      state: present
+    become: true
+  - name: create directories
+    file:
+      path: "{{ back_home }}/{{ item }}"
+      state: directory
+      owner: root 
+      group: root 
+      mode: '0755'
+    loop: "{{ folders }}"
+    become: true
+  - name: create users
+    user:
+      name: "{{ item.name | mandatory }}"
+      comment: 
+      uid: "{{ ( item.uid | int | default(omit) ) + 200  }}"
+      home:  "{{  item.home | default(omit) }}"
+      password: "{{  item.password | password_hash('sha256') }}"
+    loop: "{{ users }}"  # loop a list of dictionnaries
+    become: true
+  - name: Add ip interface  to files 
+    copy: 
+      content: "{{ item.key }} : {{ item.value }}" # key,item
+      dest: "{{ back_home }}/files/interfaces"
+    loop: "{{ ansible_eth0.ipv4 | dict2items }}" # loop a dictionary
+    become: true
+  - name: copy ssh public keys
+    authorized_key:
+      user: "{{ users[1].name }}"
+      state: present
+      key: "{{ lookup('file', item ) }}" # use file lookup to get content
+    loop: "{{ lookup('fileglob', './files/*_id_rsa.pub', wantlist=true) }}" # use fileglob in loop
+    become: true
+  

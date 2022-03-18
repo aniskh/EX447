@@ -1,0 +1,45 @@
+---
+#Usage: ansible-playbook 2_lookup.yml
+- name: A simple playbook to illustrate lookups
+  hosts: front
+  become: false
+  gather_facts: true
+  tasks:
+  - name: configure backend instance 
+    copy: 
+      content: " {{ 'client' + 4 | random(start=2, step=1) | string }}" # user random filter
+      dest: "./files/backend"
+    run_once: true
+    delegate_to: localhost
+  - name: check which backend instance used
+    debug:
+      #msg: "Front machines will use following instance as backend:  {{lookup('file', './files/backend') }}" # use file lookup
+      msg: "Front machines will use following instance as backend:  {{ query('file', './files/backend') }}" # query a file
+  - name: copy config file to frontals
+    copy:
+      src: "./files/backend"
+      dest: "{{ front_home + '/files/backend' }}"
+    become: true
+  - name: copy jinja template using lookup
+    copy:
+      content: "{{ lookup('template', './templates/infos.j2' ) }}" # use template lookup
+      dest: /etc/motd
+    become: true
+  - name: display SHELL env variable, control node
+    debug:
+      msg: "{{ lookup('env', 'SHELL') }}" # use env query
+      #msg: "{{ query('lines','echo $PATH') }}" # use lines query
+    run_once: true
+  - name: Add AWS regions 
+    copy: 
+      content: "{{ queryregions | json_query( 'ipv6_prefixes[*].region' ) | join (', ') }}" # use some filters
+      dest: "{{ front_home + '/files/aws_regions' }}"
+    vars:
+      queryregions: "{{ lookup('url', 'https://ip-ranges.amazonaws.com/ip-ranges.json', split_lines=False) }}" # use url lookup
+    become: true
+  - debug: 
+      msg: "{{ folders | flatten }}"
+    
+    
+  
+        

@@ -1,0 +1,21 @@
+backend_packages: # a list of lists
+  - [ openjdk-11-jdk, openjdk-11-jdk-headless]
+  - maven
+  - tar
+
+
+back_home: /opt/back
+folders: # a list/array
+  - service 
+  - files
+  - logs
+
+users: # dictionary/map
+  - name: logger
+    comment: "back logging user"
+    uid: 1021
+    home: "{{ back_home }}/audit"
+    password: pass
+  - name: processor
+    uid: 1022
+    password: pass
