@@ -1,0 +1,3 @@
+#Usage: ansible-galaxy role install -r requirements.yml -p roles/
+- name: haproxy
+  src: geerlingguy.haproxy

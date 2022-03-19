@@ -62,4 +62,10 @@ lookup and query: file, template, pipe, lines, env, url, k8s, password, dig ( ``
 loop instead of with_* , flatten, dict2items, fileglob, subelements
 
 ### IP addr processing:
-lookup: ipaddr ( ipv4, ipv6, public, private, subnet, ...), dig, 
+lookup: ipaddr ( ipv4, ipv6, public, private, subnet, ...), dig, dnstxt
+
+
+## Chapter 5: 
+delegating tasks: delegate_to, hostvars <br/>
+rolling updates: serial, max_fail_percentage, ansible_play_hosts, ansible_play_batch, run_once <br/>
+

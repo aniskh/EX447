@@ -1,0 +1,23 @@
+---
+#Usage: ansible-playbook 1_delegate.yml
+- name: A simple play to illustrate delegating tasks
+  hosts: loadbalancer:front
+  become: false
+  gather_facts: true
+  vars_files: 
+    - vars/loadbalancer.yml
+  tasks:
+  - name: get ip addresses of backend servers
+    set_fact:
+      haproxy_backends_list: "{{  haproxy_backends_list | default([]) + [ {'name': item, 'address': hostvars[item]['ansible_facts']['default_ipv4']['address'] } ]   }}"  # use hostvars
+    loop:
+      "{{ groups['front'] }}"
+    delegate_to: localhost
+    run_once: true
+  - name: install haproxy on haproxy machines
+    import_role: 
+      name: haproxy
+    vars:
+      haproxy_backend_servers: "{{ haproxy_backends_list  }}"
+    when: "inventory_hostname == 'loadbalancer'"
+    become: true

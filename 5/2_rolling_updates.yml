@@ -1,0 +1,21 @@
+---
+#Usage: 2_rolling_updates.yml
+- name: A simple play to illustrate rolling updates
+  hosts: all
+  become: false
+  gather_facts: true
+  serial: # update two hosts, then batchs of half of the hosts
+    - 2
+    - 50%
+  max_fail_percentage: 10% # the play fails if tasks failed on 10% of hosts  
+  tasks:
+  - name: current batch hosts 
+    debug:
+      var: ansible_play_batch # display the list of hosts of the current batch
+    run_once: true
+    #when: inventory_hostname == ansible_play_hosts[0]
+  - name: update clients  # update hosts
+    apt:
+      name: "*"
+      state: latest
+    become: true
