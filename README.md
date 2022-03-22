@@ -69,3 +69,30 @@ lookup: ipaddr ( ipv4, ipv6, public, private, subnet, ...), dig, dnstxt
 delegating tasks: delegate_to, hostvars <br/>
 rolling updates: serial, max_fail_percentage, ansible_play_hosts, ansible_play_batch, run_once <br/>
 
+
+## Chapter 6: 
+Installing Tower
+```bash
+./setup.sh
+awx-manage changepassword admin
+```
+
+## Chapter 7: 
+Managing Users, Teams <br/>
+General roles (Organization): Project Admin, Inventory Admin, Credential Admin, Notification Admin, Workflow Admin, Job Template Admin, Member, Read, Execute<br/>
+User roles: System Administrator, System Auditor, Normal User<br/>
+Teams roles: Admin, Member, Read <br/>
+```bash
+tower-cli role grant --user 'sam' --target-team 'Operators' --type 'admin'
+```
+
+## Chapter 8: 
+Managing inventories <br/>
+Inventories roles: Admin, Use, Ad Hoc, Update, Read <br/>
+import an inventory from cli:<br/>
+```bash
+awx-manage inventory_import --inventory-name=myapp-inv --source=inventory.yml
+```
+Credentials: Machine, Network, Vault, dynamic inventories (AWS, vcenter, ...), ... <br/>
+Credential roles: Admin, Use, Read <br/>
+

@@ -1,0 +1,83 @@
+# Usage: docker-compose up -d
+version: "3.9"
+services:
+  client:
+    image: mydebian:1
+    container_name: client
+    command: "sleep 7200"
+    networks:
+        - default
+  client0:
+    image: mydebian:1
+    container_name: client0
+    command: "sleep 7200"
+    networks:
+        - default
+  client1:
+    image: mydebian:1
+    container_name: client1
+    command: "sleep 7200"
+    networks:
+        - default
+  client2:
+    image: mydebian:1
+    container_name: client2
+    command: "sleep 7200"
+    networks:
+        - default
+  client3:
+    image: mydebian:1
+    container_name: client3
+    command: "sleep 7200"
+    networks:
+        - default
+  client4:
+    image: mydebian:1
+    container_name: client4
+    command: "sleep 7200"
+    networks:
+        - default
+  client5:
+    image: mydebian:1
+    container_name: client5
+    command: "sleep 7200"
+    networks:
+        - default
+  client6:
+    image: mydebian:1
+    container_name: client6
+    command: "sleep 7200"
+    networks:
+        - default
+  client7:
+    image: mydebian:1
+    container_name: client7
+    command: "sleep 7200"
+    networks:
+        - default
+  client8:
+    image: mydebian:1
+    container_name: client8
+    command: "sleep 7200"
+    networks:
+        - default
+  client9:
+    image: mydebian:1
+    container_name: client9
+    command: "sleep 7200"
+    networks:
+        - default
+  client10:
+    image: mydebian:1
+    container_name: client10
+    command: "sleep 7200"
+    networks:
+        - default
+  client11:
+    image: mydebian:1
+    container_name: client11
+    command: "sleep 7200"
+    networks:
+        - default
+networks:
+  default: 

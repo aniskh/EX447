@@ -1,0 +1,17 @@
+all:
+  children:
+    myapp:
+      children:
+        back:
+          hosts:
+            client[6:11]:
+        front:
+          hosts:
+            client[0:5]:   
+      vars:
+          ansible_connection: docker
+    ungrouped:
+      hosts:
+        loadbalancer:
+          ansible_host: client
+          ansible_connection: docker
