@@ -11,6 +11,7 @@ To use this project, please follow below steps:
 
 
 ## Chapter 2: 
+#### Managing inventories
 ungrouped: a generic group for hosts without groups in yml inventories<br/>
 Useful commands:
 ```bash
@@ -50,7 +51,7 @@ cgexec -g cpuacct,memory,pids:ansible_profile ansible-playbook playbook.yml
 - replace, regex_search, regex_replace <br/>
 - json_query, to_json, to_yaml, to_nice_json, to_nice_yaml <br/>
 
-### lookup:
+### lookups:
 
 ```bash
 ansible-doc -lt lookup
@@ -71,14 +72,14 @@ rolling updates: serial, max_fail_percentage, ansible_play_hosts, ansible_play_b
 
 
 ## Chapter 6: 
-Installing Tower
+#### Installing Tower
 ```bash
 ./setup.sh
 awx-manage changepassword admin
 ```
 
 ## Chapter 7: 
-Managing Users, Teams <br/>
+#### Managing Users, Teams
 General roles (Organization): Project Admin, Inventory Admin, Credential Admin, Notification Admin, Workflow Admin, Job Template Admin, Member, Read, Execute<br/>
 User roles: System Administrator, System Auditor, Normal User<br/>
 Teams roles: Admin, Member, Read <br/>
@@ -87,12 +88,16 @@ tower-cli role grant --user 'sam' --target-team 'Operators' --type 'admin'
 ```
 
 ## Chapter 8: 
-Managing inventories <br/>
+#### Managing inventories
 Inventories roles: Admin, Use, Ad Hoc, Update, Read <br/>
 import an inventory from cli:<br/>
 ```bash
 awx-manage inventory_import --inventory-name=myapp-inv --source=inventory.yml
 ```
-Credentials: Machine, Network, Vault, dynamic inventories (AWS, vcenter, ...), ... <br/>
+Credentials: Machine, Source Control, Network, Vault, dynamic inventories (AWS, vcenter, ...), ... <br/>
 Credential roles: Admin, Use, Read <br/>
 
+## Chapter 9: 
+#### Projects and Job templates
+Project roles: Admin, Use, Update, Read <br/>
+Job Template roles: Admin, Execute, Read <br/>

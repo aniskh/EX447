@@ -1,0 +1,40 @@
+all:
+  children:
+    myapp:
+      children:
+        back:
+          hosts:
+            client6:
+              ansible_port: 8026
+            client7:
+              ansible_port: 8027
+            client8:
+              ansible_port: 8028
+            client9:
+              ansible_port: 8029
+            client10:
+              ansible_port: 8030
+            client11:
+              ansible_port: 8031
+               
+        front:
+          hosts:
+            client0: 
+              ansible_port: 8020
+            client1: 
+              ansible_port: 8021
+            client2: 
+              ansible_port: 8022
+            client3: 
+              ansible_port: 8023
+            client4: 
+              ansible_port: 8024
+            client5: 
+              ansible_port: 8025
+      vars:
+          ansible_host: 127.0.0.1
+    ungrouped:
+      hosts:
+        client:
+          ansible_host: 127.0.0.1
+          ansible_port: 8019
