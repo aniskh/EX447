@@ -3,6 +3,7 @@
 - name: Refresh fact cache
   hosts: all
   gather_facts: false
+  order: sorted
   tasks:
   - name: display a fact using cache
     debug: 

@@ -2,7 +2,7 @@
 #Usage: ansible-playbook  3_task_order.yml
 - name: A simple playbook to illustrate order of execution of tasks, roles, handlers, hosts, ...
   hosts: front
-  order: sorted # apply on hasts alphabetically ( possibilities: inventory, reverse_inventory, sorted, reverse_sorted, shuffle)
+  order: sorted # apply on hosts alphabetically ( possibilities: inventory, reverse_inventory, sorted, reverse_sorted, shuffle)
   gather_facts: True
   become: False
   pre_tasks: 
