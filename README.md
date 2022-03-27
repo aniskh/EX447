@@ -49,7 +49,7 @@ cgexec -g cpuacct,memory,pids:ansible_profile ansible-playbook playbook.yml
 - strings: lower, upper, capitalize, b64encode, b64decode, quote <br/>
 - hash: hash, password_hash <br/>
 - replace, regex_search, regex_replace <br/>
-- json_query, to_json, to_yaml, to_nice_json, to_nice_yaml <br/>
+- json_query ( apt install python3-jmespath ), to_json, to_yaml, to_nice_json, to_nice_yaml <br/>
 
 ### lookups:
 

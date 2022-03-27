@@ -2,8 +2,8 @@
 #Usage: ansible-playbook 2_use_facts.yml ( to use in a job template, enable fact usage)
 - name: Refresh fact cache
   hosts: all
-  gather_facts: false
+  gather_facts: true
   tasks:
   - name: display a fact using cache
     debug: 
-      msg: "{{ ansible_memory_mb | json_query('cached') }}"
+      msg: "Total swap memory: {{ ansible_memory_mb | json_query('swap.total') }}"
