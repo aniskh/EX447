@@ -67,7 +67,7 @@ lookup: ipaddr ( ipv4, ipv6, public, private, subnet, ...), dig, dnstxt
 
 
 ## Chapter 5: 
-delegating tasks: delegate_to, hostvars <br/>
+delegating tasks: delegate_to, hostvars (```hostvars['serverb']['ansible_facts']['default_ipv4']['address']```)<br/>
 rolling updates: serial, max_fail_percentage, ansible_play_hosts, ansible_play_batch, run_once <br/>
 
 
@@ -101,3 +101,10 @@ Credential roles: Admin, Use, Read <br/>
 #### Projects and Job templates
 Project roles: Admin, Use, Update, Read <br/>
 Job Template roles: Admin, Execute, Read <br/>
+
+
+## Chapter 10: 
+#### Advanced Job Workflows
+Fact cache ( gather_facts: false)
+
+

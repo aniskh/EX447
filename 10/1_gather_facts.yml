@@ -1,0 +1,5 @@
+---
+#Usage: ansible-playbook 1_gather_facts.yml ( to use in a job template, enable fact storage )
+- name: Refresh fact cache
+  hosts: all
+  gather_facts: true

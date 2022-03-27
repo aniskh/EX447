@@ -1,0 +1,109 @@
+# Usage: docker-compose up -d
+version: "3.9"
+services:
+  client:
+    image: mydebian:4
+    container_name: client
+    command: "/usr/sbin/sshd -D"
+    networks:
+        - default
+    ports:
+      - "8019:22"
+  client0:
+    image: mydebian:4
+    container_name: client0
+    command: "/usr/sbin/sshd -D"
+    networks:
+        - default
+    ports:
+      - "8020:22"
+  client1:
+    image: mydebian:4
+    container_name: client1
+    command: "/usr/sbin/sshd -D"
+    networks:
+        - default
+    ports:
+      - "8021:22"
+  client2:
+    image: mydebian:4
+    container_name: client2
+    command: "/usr/sbin/sshd -D"
+    networks:
+        - default
+    ports:
+      - "8022:22"
+  client3:
+    image: mydebian:4
+    container_name: client3
+    command: "/usr/sbin/sshd -D"
+    networks:
+        - default
+    ports:
+      - "8023:22"
+  client4:
+    image: mydebian:4
+    container_name: client4
+    command: "/usr/sbin/sshd -D"
+    networks:
+        - default
+    ports:
+      - "8024:22"
+  client5:
+    image: mydebian:4
+    container_name: client5
+    command: "/usr/sbin/sshd -D"
+    networks:
+        - default
+    ports:
+      - "8025:22"
+  client6:
+    image: mydebian:4
+    container_name: client6
+    command: "/usr/sbin/sshd -D"
+    networks:
+        - default
+    ports:
+      - "8026:22"
+  client7:
+    image: mydebian:4
+    container_name: client7
+    command: "/usr/sbin/sshd -D"
+    networks:
+        - default
+    ports:
+      - "8027:22"
+  client8:
+    image: mydebian:4
+    container_name: client8
+    command: "/usr/sbin/sshd -D"
+    networks:
+        - default
+    ports:
+      - "8028:22"
+  client9:
+    image: mydebian:4
+    container_name: client9
+    command: "/usr/sbin/sshd -D"
+    networks:
+        - default
+    ports:
+      - "8029:22"
+  client10:
+    image: mydebian:4
+    container_name: client10
+    command: "/usr/sbin/sshd -D"
+    networks:
+        - default
+    ports:
+      - "8030:22"
+  client11:
+    image: mydebian:4
+    container_name: client11
+    command: "/usr/sbin/sshd -D"
+    networks:
+        - default
+    ports:
+      - "8031:22"
+networks:
+  default: 

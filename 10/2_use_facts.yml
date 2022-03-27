@@ -1,0 +1,9 @@
+---
+#Usage: ansible-playbook 2_use_facts.yml ( to use in a job template, enable fact usage)
+- name: Refresh fact cache
+  hosts: all
+  gather_facts: false
+  tasks:
+  - name: display a fact using cache
+    debug: 
+      msg: "{{ ansible_memory_mb }}"
