@@ -6,4 +6,4 @@
   tasks:
   - name: display a fact using cache
     debug: 
-      msg: "{{ ansible_memory_mb }}"
+      msg: "{{ ansible_memory_mb | json_query('cached') }}"
