@@ -1,8 +1,8 @@
 ---
-#Usage: ansible-playbook 2_use_facts.yml ( to use in a job template, enable fact usage)
+#Usage: ansible-playbook 2_use_facts.yml -k ( to use in a job template, enable fact usage)
 - name: Refresh fact cache
   hosts: all
-  gather_facts: true
+  gather_facts: false
   tasks:
   - name: display a fact using cache
     debug: 
