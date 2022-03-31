@@ -1,0 +1,54 @@
+---
+#Usage: ansible-playbook 1_rest_api.yml ( run job template using REST APIs)
+- name: Simple playbook to un a job template using REST APIs
+  hosts: localhost
+  gather_facts: false
+  become: false
+  vars:
+    - job_template_id: 15
+    - tower_user: admin
+    - tower_password: password
+  tasks:
+  - name: get job template details 
+    uri: 
+      url: "http://localhost/api/v2/job_templates/{{ job_template_id }}/"
+      user: "{{ tower_user }}"
+      password: "{{ tower_password }}"
+      force_basic_auth: true
+      status_code: 200
+      body_format: json
+    register: template_details
+  - name: display starting message
+    debug: 
+      msg: "Starting running following job template: {{ template_details.json | json_query('name')  }}"
+  - name: Run the job template
+    uri: 
+      url: "http://localhost/api/v2/job_templates/{{ job_template_id }}/launch/"
+      user: "{{ tower_user }}"
+      password: "{{ tower_password }}"
+      force_basic_auth: true
+      method: POST
+      #body_format: json
+      status_code: 201
+    register: _result
+    until: _result.status == 201
+    retries: 3 
+    delay: 30 
+  - name: wait
+    wait_for:
+      timeout: 300
+    delegate_to: localhost 
+
+  - name: check if job has finished
+    uri:
+      url: "http://localhost/api/v2/jobs/{{ _result.json.id }}/"
+      user: "{{ tower_user }}"
+      password: "{{ tower_password }}"
+      force_basic_auth: true
+      status_code: 200
+      body_format: json
+    register: job_result
+    # until: job_result.status == "successful"
+    # retries: 10
+    # delay: 30 
+  -  debug: var=job_result

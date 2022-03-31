@@ -1,6 +1,6 @@
 ---
 #Usage: ansible-playbook 2_use_facts.yml -k ( to use in a job template, enable fact usage)
-- name: Refresh fact cache
+- name: Use fact cache
   hosts: all
   gather_facts: false
   order: sorted

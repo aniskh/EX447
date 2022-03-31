@@ -1,0 +1,44 @@
+---
+#Usage: ansible-playbook 2_apis.yml
+- name: Simple playbook to call a REST API
+  gather_facts: false
+  become: false
+  hosts: localhost
+  vars:
+    - tower_token: 'EUTwzeBQMFI26E0TQq9IY99HIWGzeO'
+  tasks:
+  - name: Login to a form based webpage
+    uri:
+      url: 'https://www.google.com/'
+      method: GET
+      # body_format: form-urlencoded
+      # body:
+      #   - [ name, admin ]
+      #   - [ password, password ]
+      #   - [ enter, Sign in ]
+      # status_code: 403
+    register: login_details
+  - debug: var=login_details
+# - name: Login to a form based webpage using a list of tuples
+#   uri:
+#     url: https://your.form.based.auth.example.com/index.php
+#     method: POST
+#     body_format: form-urlencoded
+#     body:
+#     - [ name, your_username ]
+#     - [ password, your_password ]
+#     - [ enter, Sign in ]
+#     status_code: 302
+#  register: login
+  - name: display list of users
+    uri: 
+      url: "http://localhost/#/login"
+      body_format: form-urlencoded
+      body: 
+        cookie: csrftoken='riiaybRLQi5OJwaBZmSzfVaO7z7vPquKRtyTaDv7zIiXjeFhqYXH4bkab2NAWGgR'
+        user: admin
+        password: password
+        enter: Log In
+      method: POST
+    register: users_details
+

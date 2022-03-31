@@ -1,0 +1,23 @@
+---
+#Usage: ansible-playbook 2_oauth_token.yml
+- name: Simple playbook to call a REST API using oauth token
+  hosts: localhost
+  gather_facts: false
+  become: false
+  vars:
+    - tower_token: 'EUTwzeBQMFI26E0TQq9IY99HIWGzeO'
+  tasks:
+  - name: display list of users
+    uri: 
+      url: "http://localhost/api/v2/users"
+      headers:
+         Authorization: "Bearer {{ tower_token }}"
+         Content-Type: "application/json"
+      method: GET
+      status_code: 200
+      body_format: json
+    register: users_details
+  - name: display usernames
+    debug: 
+      msg: "List of usernames: {{ users_details.json | json_query('results[*].username') | join(',') }}"
+

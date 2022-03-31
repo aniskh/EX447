@@ -105,6 +105,32 @@ Job Template roles: Admin, Execute, Read <br/>
 
 ## Chapter 10: 
 #### Advanced Job Workflows
-Fact cache ( gather_facts: false)
+Fact cache ( gather_facts: false) <br/>
+Prompt on launch for variables <br/>
+Job Template Surveys for extra variables <br/>
+Workflow Job Templates, WORKFLOW VISUALIZER <br/>
+Workflow Job Template roles: Admin, Execute, Read, Approve <br/>
 
+## Chapter 11: 
+#### REST APIs
+```bash
+curl -X GET https://tower-url/api/ -k
+curl -X GET --user admin:password https://tower-url/api/v2/instances/ | json_pp
+curl -X GET --user admin:password http://localhost/api/v2/job_templates/15/ -k -s | json_pp
+curl -X POST --user admin:password http://localhost/api/v2/job_templates/15/launch/ -k -s | json_pp
+curl -X GET "http://localhost/api/v2/users/"  --user admin --oauth2-bearer xdWkzTZLJoQCVHpH -k -s | json_pp
+```
+Create an oauth2 token:
+```bash
+awx-manage create_oauth2_token --user admin
+```
 
+## Chapter 12: 
+#### Inventories
+update inventory from CLI:
+
+```bash
+awx-manage inventory_import --inventory-name=myapp-inv --source=inventory.yml --override
+```
+Inventories from SCM, through projects ( Sourced from a Project ) <br/>
+Smart Inventories: use filters ( like ```ansible_facts.ansible_distribution:"RedHat"``` ) <br/>
