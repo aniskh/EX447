@@ -1,0 +1,17 @@
+---
+- name: check if an ip or a subnet is private or public
+  hosts: localhost
+  become: false
+  gather_facts: false
+  vars_prompt:
+          - name: ip_addr
+            prompt: Please enter an ip address to check 
+  tasks:
+  - name: is private ?
+    debug:
+            msg: 
+              - "Entered value: {{ ip_addr | quote }}"
+              - "Private: {{ ip_addr  | ipv4('private') | default ('False') }}"
+              - "Public: {{ ip_addr  | ipv4('public') |  default('False') }}"
+ 
+    

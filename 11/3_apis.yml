@@ -1,5 +1,5 @@
 ---
-#Usage: ansible-playbook 2_apis.yml
+#Usage: ansible-playbook 3_apis.yml
 - name: Simple playbook to call a REST API
   gather_facts: false
   become: false
