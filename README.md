@@ -134,3 +134,10 @@ awx-manage inventory_import --inventory-name=myapp-inv --source=inventory.yml --
 ```
 Inventories from SCM, through projects ( Sourced from a Project ) <br/>
 Smart Inventories: use filters ( like ```ansible_facts.ansible_distribution:"RedHat"``` ) <br/>
+
+## Chapter 14: 
+### Backup & restore
+```bash
+./setup.sh -b
+./setup.sh -r 
+```

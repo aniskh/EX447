@@ -10,8 +10,7 @@
   - name: is private ?
     debug:
             msg: 
-              - "Entered value: {{ ip_addr | quote }}"
-              - "Private: {{ ip_addr  | ipv4('private') | default ('False') }}"
-              - "Public: {{ ip_addr  | ipv4('public') |  default('False') }}"
+              #- "Carrier-Grade NAT: {{ ip_addr | ipaddr('ipv4') | network_in_usable('100.64.0.0/10') }}"
+              - "The address {{ ip_addr | quote }} is {{ 'Private' if ( ip_addr  | ipaddr('private' ) ) else 'Public' }}"
  
     
